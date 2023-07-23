@@ -66,23 +66,6 @@ Inserted a new column in all_sessions table with a split of the product category
 
 
 
-
-        
-
-Deleted rows in the analytics table missing units_sold values:
-        Count of all records in the analytics table - 4301122.
-        select count(*)
-        from analytics
-
-        Count of records missing missing units_sold values - 4205975.
-        select *
-        from analytics
-        where units_sold is null
-
-        Deleting records missing either units_sold values - 
-        delete from all_sessions
-        where country LIKE '%not%' or city LIKE '%not%'
-
         Verification: number of records in table - 6478
         select count(*)
         from all_sessions
