@@ -115,13 +115,36 @@ Apparel is also the most ordered product category from 4 out of the top 5 cities
 
 SQL Queries:
 
+Top selling product based on Countries
+SELECT distinct(country), v2productname, sum(product)
+FROM(
+	select s.country, s.city, s.v2productname, count(s.v2productname) product
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY s.v2productname, s.country, s.city
+order by product desc) as temp3
+GROUP BY country, v2productname
+HAVING country not like '%not%'
+order by sum(product) desc
+
+Top selling product based on Cities
+SELECT distinct(city), v2productname, sum(product)
+FROM(
+	select s.country, s.city, s.v2productname, count(s.v2productname) product
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY s.v2productname, s.country, s.city
+order by product desc) as temp3
+GROUP BY city, v2productname
+HAVING city not like '%not%'
+order by sum(product) desc
 
 
 Answer:
-
-
-
-
+Because the majority of the visitors came in from the United States, the top products ordered are also from visitors in the United States. There also isnèt any visible trends as the top three products ordered are Googleès cotton short sleeve shirt, Google Power bank and Youtube Custom Decals.
+There is no observable trend in the product ordered by visitors from various cities. Visitors from charlotte ordered 1582 units of the google lunch bags while visitors from chicago ordered the youtube custom decals. Coming in at third is visitorss from Hong Kong who ordered Google Device stands mostly. 
 
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
 
