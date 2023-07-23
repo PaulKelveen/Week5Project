@@ -5,33 +5,71 @@ Answer the following questions and provide the SQL queries used to find the answ
 
 
 SQL Queries:
-select s.country, s.city, sum(newrevenue) as sum_of_transactions
+Country with the highest revenue
+SELECT distinct(country), sum(sum_of_transactions) 
+FROM (select s.country, s.city, sum(newrevenue) as sum_of_transactions
 from all_sessions s
 join analytics n
 on s.fullvisitorid = n.fullvisitorid
 GROUP BY s.country, s.city, n.newrevenue
 HAVING n.newrevenue > 0
-ORDER BY sum_of_transactions desc
+ORDER BY sum_of_transactions desc) as temp1
+GROUP BY country
+ORDER BY sum(sum_of_transactions) desc
+
+City with the highest revenue
+SELECT distinct(city), sum(sum_of_transactions) 
+FROM (select s.country, s.city, sum(newrevenue) as sum_of_transactions
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY s.country, s.city, n.newrevenue
+HAVING n.newrevenue > 0
+ORDER BY sum_of_transactions desc) as temp1
+GROUP BY city
+ORDER BY sum(sum_of_transactions) desc
+
 
 Answer:
-United State is the country with the highest transactions on the site and Mountain View is the city with the higest transaction of 1,613,081,250,000.
+United State, Canada and Hong Kong are the top three countries with the highest revenue. 
+Mountain View, San Bruno and New York are the top three cities with the highest transaction revenues on the website.
 
 
 **Question 2: What is the average number of products ordered from visitors in each city and country?**
 
 
 SQL Queries:
-select distinct(s.country), s.city, avg(n.units_sold) avg_products_ordered
+
+Average products ordered by country
+SELECT distinct(country), sum(avg_products_ordered)
+FROM (
+select s.country, s.city, avg(n.units_sold) avg_products_ordered
 from all_sessions s
 join analytics n
 on s.fullvisitorid = n.fullvisitorid
-GROUP BY distinct(s.country), s.city, n.units_sold
+GROUP BY (s.country), s.city, n.units_sold
 having n.units_sold is not null
-order by avg_products_ordered desc
+order by avg_products_ordered desc) as temp2
+GROUP BY country
+ORDER BY sum(avg_products_ordered) desc
+
+Average products ordered by city
+SELECT distinct(city), sum(avg_products_ordered)
+FROM (
+select s.country, s.city, avg(n.units_sold) avg_products_ordered
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY (s.country), s.city, n.units_sold
+having n.units_sold is not null
+order by avg_products_ordered desc) as temp2
+GROUP BY city
+ORDER BY sum(avg_products_ordered) desc
 
 
 Answer:
-Mountain View United States has the highest average number of products ordered at 825 units.
+United States, Canada and Hong Kong have the highest average products ordered with 3698, 11 and 11 units respectively. 
+Mountain View, San Bruno and Sunnyvale have the highest average products ordered with 1143, 707 and 522 units respectively.
 
 
 
@@ -39,16 +77,36 @@ Mountain View United States has the highest average number of products ordered a
 
 
 SQL Queries:
-select country, city, v2productcategory, count(v2productname)
-from all_sessions
-GROUP BY 1, 2, 3
-order by count(v2productname) desc
+
+Product categories ordered by visitors from different countries
+SELECT distinct(country), productcategory, sum(product)
+FROM(
+	select s.country, s.city, s.productcategory, count(s.productcategory) product
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY s.productcategory, s.country, s.city
+order by product desc) as temp3
+GROUP BY country, productcategory
+order by sum(product) desc
+
+Product categories ordered by visitors from different cities
+SELECT distinct(city), productcategory, sum(product)
+FROM(
+	select s.country, s.city, s.productcategory, count(s.productcategory) product
+from all_sessions s
+join analytics n
+on s.fullvisitorid = n.fullvisitorid
+GROUP BY s.productcategory, s.country, s.city
+order by product desc) as temp3
+GROUP BY city, productcategory
+order by sum(product) desc
 
 
 
 Answer:
-
-
+It is evident that visitors from most countries order apparel on the website as that is the most ordered product category from the top 3 countries with the highest order by productcategories (US, India and Japan).
+Apparel is also the most ordered product category from 4 out of the top 5 cities with the highest orders grouped by productcategories.
 
 
 
