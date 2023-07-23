@@ -5,7 +5,7 @@ What issues will you address by cleaning the data?
 -linked products table (PK), sales_records (FK), sales_bu_sku (FK) and all_ sessions table using the ProductSKU column.
 -deleted rows in the all_sessions table missing country and city.
 -inserted the product of unit_price and units_sold into the new column creared called newrevenue on the analytics table.
--
+-inserted a new column in all_sessions table with a split of the product category
 
 
 
@@ -55,8 +55,14 @@ Inserted the product of unit_price and units_sold into the new column creared ca
 	   		ELSE (unit_price * units_sold)
         end)
         
+Inserted a new column in all_sessions table with a split of the product category
+ 	Creating new column productcategory.
+        alter table all_sessions
+	add productcategory text;
 
-        
+	Updating productcategory column
+    	update all_sessions
+	SET productcategory = split_part(v2productcategory,'/', 2);
 
 
 
