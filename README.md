@@ -1,7 +1,7 @@
 # Final-Project-Transforming-and-Analyzing-Data-with-SQL
 
 ## Project/Goals
-The goal of this project is to analyze a transactions made on a companyès website by visitors from multiple countries and cities.
+The goal of this project is to analyze a transactions made on a company's website by visitors from multiple countries and cities.
 By doing this, we intend to build insights around the products making the best sales, highlighting the countries with the highest visitors on the sites as well as revenues made from those countries.
 
 ## Process
