@@ -149,11 +149,40 @@ There is no observable trend in the product ordered by visitors from various cit
 **Question 5: Can we summarize the impact of revenue generated from each city/country?**
 
 SQL Queries:
-
+SELECT
+    city,
+    country,
+    SUM(product_revenue) AS total_revenue
+FROM (
+    SELECT
+        s.city,
+        s.country,
+        s.productSKU,
+        s.v2ProductName,
+        SUM(a.newrevenue) AS product_revenue
+    FROM
+        all_sessions AS s
+    INNER JOIN
+        analytics AS a 
+	ON s.fullVisitorId = a.fullVisitorId
+    WHERE
+        a.newrevenue IS NOT NULL
+    GROUP BY
+        s.city,
+        s.country,
+        s.productSKU,
+        s.v2ProductName
+) AS product_revenue_cte
+GROUP BY
+    city,
+    country
+ORDER BY
+    total_revenue DESC;
 
 
 Answer:
-
+This query highlîghts the impact of revenue generated from each city and country, sorted by the total revenue.
+As earlier called out, the company makes majority of its revenue from cities from United States.
 
 
 
