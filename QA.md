@@ -2,7 +2,7 @@ What are your risk areas? Identify and describe them.
 
 -Risk areas observed:
 Identifying null values in the required columns.
-Next was ensuring that the table contained all the data required.
+Ensuring the table contained all the data required.
 Identifying missing data. 
 Checking for duplicates.
 Ensuring the right data type.
