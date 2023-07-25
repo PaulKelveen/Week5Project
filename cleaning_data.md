@@ -1,8 +1,8 @@
 What issues will you address by cleaning the data?
 
--dropped the sales_report tables as the records found there exists in both the product and the sales_by_colums.
+-dropped the sales_report table as the records found there exists in both the product and the sales_by_sku tables.
 -verified that all entries in the product table is unique. 
--linked products table (PK), sales_records (FK), sales_bu_sku (FK) and all_ sessions table using the ProductSKU column.
+-linked products table (SKU; PK), sales_records (productSKU; FK), sales_bu_sku (productSKU; FK) and all_ sessions (productSKU; FK) table.
 -deleted rows in the all_sessions table missing country and city.
 -inserted the product of unit_price and units_sold into the new column creared called newrevenue on the analytics table.
 -inserted a new column in all_sessions table with a split of the product category
