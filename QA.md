@@ -12,9 +12,12 @@ QA Process:
 Describe your QA process and include the SQL queries used to execute it.
 
 Sales_by_SKU Table:
-    Count of all records in the sales_by_sku table: 462
+Count of all records in the sales_by_sku table: 462
+
+```sql
     select count(*)
     from sales_by_sku
+```
 
     Count of SKU records in the sales_by_sku table: 462; no duplicates.
     select distinct count(productsku)
